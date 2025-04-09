@@ -10,7 +10,6 @@ const port = process.env.PORT || 3000;
 
 app.use(
   cors({
-    origin: "https://react-opimistic-update.vercel.app",
     origin: [
       "http://localhost:5173",
       "https://notion-api-backend-f22di13eq-neungdongs-projects.vercel.app",

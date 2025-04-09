@@ -27,13 +27,12 @@ const port = process.env.PORT || 3000;
 // );
 // CORS 옵션 설정
 const corsOptions = {
-  origin: "*",
-  methods: "GET,POST,PUT,DELETE",
-  allowedHeaders: "Content-Type,Authorization",
+  origin: ["http://localhost:5173", "notion-api-backend-3d4ersc6m-neungdongs-projects.vercel.app"],
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true,
 };
 
-app.use(cors(corsOptions));
 app.use(express.json());
 
 const notion = new Client({ auth: process.env.NOTION_API_KEY });

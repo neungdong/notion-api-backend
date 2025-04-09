@@ -8,7 +8,19 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT || 3000;
 
-app.use(cors());
+app.use(
+  cors({
+    origin: "https://react-opimistic-update.vercel.app",
+    origin: [
+      "http://localhost:5173",
+      "https://notion-api-backend-f22di13eq-neungdongs-projects.vercel.app",
+    ],
+    methods: ["GET", "POST", "PATCH", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type"],
+    credentials: true,
+  })
+);
+
 app.use(express.json());
 
 const notion = new Client({ auth: process.env.NOTION_API_KEY });

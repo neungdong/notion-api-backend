@@ -1,22 +1,20 @@
 import express, { Request, Response } from "express";
-import cors from "cors"
+import cors from "cors";
 import * as dotenv from "dotenv";
 import { Client } from "@notionhq/client";
 
 dotenv.config();
 
 const app = express();
-const port = process.env.PORT || 3000;
 
-// 1. CORS middleware
 app.use(
   cors({
-    origin: "*",
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type"],
+    origin: "https://react-opimistic-update.vercel.app",
+    methods: ["GET", "POST", "PATCH", "PUT", "DELETE", "OPTIONS"],
+    credentials: true,
   })
 );
-app.options("*", cors());
+
 app.use(express.json());
 
 const notion = new Client({ auth: process.env.NOTION_API_KEY });
@@ -133,6 +131,7 @@ app.delete("/todos/:id", async (req: Request, res: Response) => {
   }
 });
 
+const port = process.env.PORT || 3000;
 app.listen(port, () => {
   console.log(`🚀 Server is running on http://localhost:${port}`);
 });

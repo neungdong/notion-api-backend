@@ -19,19 +19,24 @@ const port = process.env.PORT || 3000;
 //   })
 // );
 
-app.use(
-  cors({
-    origin: "*",
-    credentials: true,
-  })
-);
-
+// app.use(
+//   cors({
+//     origin: "*",
+//     credentials: true,
+//   })
+// );
+// CORS 옵션 설정
+const corsOptions = {
+  origin: "http://example.com", // 허용할 출처
+  methods: "GET,POST,PUT,DELETE", // 허용할 메서드
+  allowedHeaders: "Content-Type, Authorization", // 허용할 헤더
+  credentials: true, // 쿠키 등 자격 증명 허용
+};
 app.use(express.json());
 
 const notion = new Client({ auth: process.env.NOTION_API_KEY });
 const databaseId = process.env.NOTION_DATABASE_ID!;
 
-// ✅ GET: 전체 할 일 조회
 app.get("/todos", async (req: Request, res: Response) => {
   try {
     const response = await notion.databases.query({
@@ -52,7 +57,6 @@ app.get("/todos", async (req: Request, res: Response) => {
   }
 });
 
-// ✅ POST: 새 할 일 추가
 app.post("/todos", async (req: Request, res: Response) => {
   const { id, text, checked } = req.body;
 
@@ -80,7 +84,6 @@ app.post("/todos", async (req: Request, res: Response) => {
       },
     });
 
-    // 생성한 todo를 JSON 형태로 반환
     res.status(201).json({
       id,
       text,
@@ -91,7 +94,6 @@ app.post("/todos", async (req: Request, res: Response) => {
   }
 });
 
-// ✅ PATCH: 할 일 수정
 app.patch("/todos/:id", async (req: Request, res: Response) => {
   const { id: pageId } = req.params;
   const { id, text, checked } = req.body;
@@ -126,7 +128,6 @@ app.patch("/todos/:id", async (req: Request, res: Response) => {
   }
 });
 
-// ✅ DELETE: 할 일 삭제 (Notion에서는 아카이브 처리)
 app.delete("/todos/:id", async (req: Request, res: Response) => {
   const { id } = req.params;
 

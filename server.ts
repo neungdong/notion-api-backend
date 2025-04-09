@@ -8,14 +8,20 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT || 3000;
 
+// app.use(
+//   cors({
+//     origin: [
+//       "*"
+//     ],
+//     methods: ["GET", "POST", "PATCH", "PUT", "DELETE", "OPTIONS"],
+//     allowedHeaders: ["Content-Type"],
+//     credentials: true,
+//   })
+// );
+
 app.use(
   cors({
-    origin: [
-      "http://localhost:5173",
-      "https://notion-api-backend-f22di13eq-neungdongs-projects.vercel.app",
-    ],
-    methods: ["GET", "POST", "PATCH", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type"],
+    origin: "*",
     credentials: true,
   })
 );

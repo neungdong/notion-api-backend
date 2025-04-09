@@ -27,11 +27,13 @@ const port = process.env.PORT || 3000;
 // );
 // CORS 옵션 설정
 const corsOptions = {
-  origin: "http://example.com", // 허용할 출처
+  origin: "*", // 허용할 출처
   methods: "GET,POST,PUT,DELETE", // 허용할 메서드
-  allowedHeaders: "Content-Type, Authorization", // 허용할 헤더
+  allowedHeaders: "Content-Type,Authorization", // 허용할 헤더
   credentials: true, // 쿠키 등 자격 증명 허용
 };
+
+app.use(cors(corsOptions));
 app.use(express.json());
 
 const notion = new Client({ auth: process.env.NOTION_API_KEY });

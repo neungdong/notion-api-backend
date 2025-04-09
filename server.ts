@@ -25,13 +25,13 @@ const port = process.env.PORT || 3000;
 //     credentials: true,
 //   })
 // );
-// CORS 옵션 설정
 const corsOptions = {
-  origin: ["http://localhost:5173", "notion-api-backend-3d4ersc6m-neungdongs-projects.vercel.app"],
-  methods: ["GET", "POST", "PUT", "DELETE"],
-  allowedHeaders: ["Content-Type", "Authorization"],
+  origin: ["http://localhost:5173", "https://your-frontend.vercel.app"], // ✅
   credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
 };
+app.use(cors(corsOptions));
 
 app.use(express.json());
 

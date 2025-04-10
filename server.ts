@@ -25,13 +25,13 @@ const port = process.env.PORT || 3000;
 //     credentials: true,
 //   })
 // );
-const corsOptions = {
+const corsOptions: cors.corsOptions = {
   origin: ["http://localhost:5173", "notion-api-backend-jlzv50a5b-neungdongs-projects.vercel.app"], // ✅
-  credentials: true,
+  credentials: false,
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type"],
+  allowedHeaders: ["Content-Type", "Authorization"],
 };
-app.use(cors(corsOptions));
+export default cors(corsOptions);
 
 app.use(express.json());
 

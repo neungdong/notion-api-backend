@@ -1,37 +1,20 @@
 import express, { Request, Response } from "express";
-import cors from "cors";
+import cors, { CorsOptions } from "cors"; 
 import * as dotenv from "dotenv";
 import { Client } from "@notionhq/client";
 
 dotenv.config();
-
 const app = express();
 const port = process.env.PORT || 3000;
 
-// app.use(
-//   cors({
-//     origin: [
-//       "*"
-//     ],
-//     methods: ["GET", "POST", "PATCH", "PUT", "DELETE", "OPTIONS"],
-//     allowedHeaders: ["Content-Type"],
-//     credentials: true,
-//   })
-// );
-
-// app.use(
-//   cors({
-//     origin: "*",
-//     credentials: true,
-//   })
-// );
-const corsOptions: cors.corsOptions = {
-  origin: "*",
+const corsOptions: CorsOptions = {
+  origin: "*", // 또는 네가 허용하고 싶은 클라이언트 주소
   credentials: false,
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
 };
-export default cors(corsOptions);
+
+app.use(cors(corsOptions)); // ✔️ 여기서 CORS 미들웨어 적용
 
 app.use(express.json());
 

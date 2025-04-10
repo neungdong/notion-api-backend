@@ -29,7 +29,7 @@ const corsOptions = {
   origin: ["http://localhost:5173", "notion-api-backend-jlzv50a5b-neungdongs-projects.vercel.app"], // ✅
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"],
+  allowedHeaders: ["Content-Type"],
 };
 app.use(cors(corsOptions));
 

@@ -34,7 +34,6 @@ app.get("/todos", async (req: Request, res: Response) => {
         id: page.properties.id.title?.[0]?.text?.content || "",
         text: page.properties.text.rich_text?.[0]?.text?.content || "",
         checked: page.properties.checked.checkbox || false,
-        pageId: page.id,
       }));
 
     res.json(todos);

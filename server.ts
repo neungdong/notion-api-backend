@@ -79,64 +79,32 @@ app.post("/todos", async (req: Request, res: Response) => {
   }
 });
 
-// app.patch("/todos/:id", async (req: Request, res: Response) => {
-//   const { id: pageId } = req.params;
-//   const { id, text, checked } = req.body;
-
-//   try {
-//     await notion.pages.update({
-//       page_id: pageId,
-//       properties: {
-//         id: {
-//           title: [
-//             {
-//               text: { content: id },
-//             },
-//           ],
-//         },
-//         text: {
-//           rich_text: [
-//             {
-//               text: { content: text },
-//             },
-//           ],
-//         },
-//         checked: {
-//           checkbox: checked,
-//         },
-//       },
-//     });
-
-//     res.status(200).json({ message: "Updated successfully" });
-//   } catch (error: any) {
-//     res.status(500).json({ error: error.message });
-//   }
-// });
 app.patch("/todos/:id", async (req: Request, res: Response) => {
-  const clientId = req.params.id; 
-  const { text, checked } = req.body;
+  const { id: pageId } = req.params;
+  const { id, text, checked } = req.body;
 
   try {
-    const { results } = await notion.databases.query({
-      database_id: databaseId,
-      filter: {
-        property: "id",
-        title: { equals: clientId }
-      }
-    });
-
-    if (results.length === 0) {
-      return res.status(404).json({ error: "Todo not found" });
-    }
-
-    const notionPageId = results[0].id;
-
     await notion.pages.update({
-      page_id: notionPageId,
+      page_id: pageId,
       properties: {
-        text: { rich_text: [{ text: { content: text } }] },
-        checked: { checkbox: checked }
-      }
+        id: {
+          title: [
+            {
+              text: { content: id },
+            },
+          ],
+        },
+        text: {
+          rich_text: [
+            {
+              text: { content: text },
+            },
+          ],
+        },
+        checked: {
+          checkbox: checked,
+        },
+      },
     });
 
     res.status(200).json({ message: "Updated successfully" });
@@ -145,42 +113,13 @@ app.patch("/todos/:id", async (req: Request, res: Response) => {
   }
 });
 
-// app.delete("/todos/:id", async (req: Request, res: Response) => {
-//   const { id } = req.params;
-
-//   try {
-//     await notion.pages.update({
-//       page_id: id,
-//       archived: true,
-//     });
-
-//     res.status(200).json({ message: "Deleted successfully" });
-//   } catch (error: any) {
-//     res.status(500).json({ error: error.message });
-//   }
-// });
 app.delete("/todos/:id", async (req: Request, res: Response) => {
-  const clientId = req.params.id;
+  const { id } = req.params;
 
   try {
-    const { results } = await notion.databases.query({
-      database_id: databaseId,
-      filter: {
-        property: "id",
-        title: { equals: clientId }
-      }
-    });
-
-    if (results.length === 0) {
-      return res.status(404).json({ error: "Todo not found" });
-    }
-
-    const notionPageId = results[0].id;
-
     await notion.pages.update({
-      page_id: notionPageId,
+      page_id: id,
       archived: true,
-      properties: {} // ⬅️ TypeScript 만족용
     });
 
     res.status(200).json({ message: "Deleted successfully" });
@@ -188,7 +127,6 @@ app.delete("/todos/:id", async (req: Request, res: Response) => {
     res.status(500).json({ error: error.message });
   }
 });
-
 
 app.listen(port, () => {
   console.log(`🚀 Server is running on http://localhost:${port}`);

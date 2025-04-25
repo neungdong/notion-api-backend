@@ -179,7 +179,8 @@ app.delete("/todos/:id", async (req: Request, res: Response) => {
 
     await notion.pages.update({
       page_id: notionPageId,
-      archived: true
+      archived: true,
+      properties: {} // ⬅️ TypeScript 만족용
     });
 
     res.status(200).json({ message: "Deleted successfully" });
